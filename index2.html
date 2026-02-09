@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San José Lab | Decidiendo la Ciudad</title>
+    
+    <!-- Librerías -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        lab: {
+                            bg: '#F2F2F2',      // Gris concreto claro
+                            black: '#111111',   // Negro puro
+                            accent: '#FF3300',  // Naranja industrial
+                            text: '#333333'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #F2F2F2; color: #111; }
+        
+        /* Tipografía Gigante */
+        .mega-title { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.9; letter-spacing: -0.05em; }
+        
+        /* Animaciones */
+        .hover-lift { transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .hover-lift:hover { transform: translateY(-8px); }
+        
+        .modal-enter { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Video Placeholder Pattern */
+        .video-pattern {
+            background-color: #000;
+            background-image: repeating-linear-gradient(45deg, #111 25%, transparent 25%, transparent 75%, #111 75%, #111), repeating-linear-gradient(45deg, #111 25%, #000 25%, #000 75%, #111 75%, #111);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 w-full px-6 py-6 flex justify-between items-center z-50 mix-blend-difference text-white">
+        <a href="#" class="text-xl font-display font-bold tracking-tight uppercase">SJ<span class="text-lab-accent">LAB</span></a>
+        <div class="flex items-center gap-6 text-sm font-medium">
+            <a href="#projects" class="hover:text-lab-accent transition">Proyectos</a>
+            <a href="#about" class="hover:text-lab-accent transition hidden md:block">El Manifiesto</a>
+            <div class="border border-white/30 px-3 py-1 rounded-full flex items-center gap-2">
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                <span>Votación Cierra en: <span id="countdown" class="font-mono">48:00:00</span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="min-h-screen flex flex-col justify-center px-6 pt-20 pb-10 relative">
+        <div class="max-w-7xl mx-auto w-full">
+            <p class="text-sm font-mono text-lab-accent mb-4 uppercase tracking-widest">Convocatoria Pública 2026</p>
+            <h1 class="mega-title font-display font-bold mb-8">
+                DISEÑA <br>
+                TU <span class="text-transparent bg-clip-text bg-gradient-to-r from-lab-accent to-orange-600">CIUDAD</span>
+            </h1>
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between border-t border-black/10 pt-8 mt-8">
+                <p class="max-w-md text-lg text-lab-text leading-relaxed">
+                    Tres propuestas arquitectónicas para el Parque Central. 
+                    Solo una se construirá. Tú tienes la última palabra.
+                </p>
+                <a href="#projects" class="mt-8 md:mt-0 px-8 py-4 bg-lab-black text-white font-bold rounded-full hover:bg-lab-accent transition duration-300 flex items-center gap-2 group">
+                    Ver Propuestas <i class="ph ph-arrow-down group-hover:translate-y-1 transition"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Abstract Background Element -->
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-[40vw] h-[80vh] bg-gray-300 opacity-20 -z-10 rounded-l-full blur-3xl"></div>
+    </header>
+
+    <!-- PROJECTS GRID -->
+    <section id="projects" class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-3 gap-12">
+                
+                <!-- PROYECTO 1 -->
+                <article class="project-card group cursor-pointer" onclick="openModal('A')">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-6 shadow-lg hover-lift">
+                        <img src="https://images.unsplash.com/photo-1518005068251-37900150dfca?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Opción A">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">Opción A</div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent text-white opacity-0 group-hover:opacity-100 transition duration-300 translate-y-4 group-hover:translate-y-0">
+                            <span class="flex items-center gap-2 font-bold">Ver Detalles <i class="ph ph-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-end mb-2">
+                        <h2 class="text-3xl font-display font-bold uppercase">Pulmón Urbano</h2>
+                        <span class="text-sm font-mono text-gray-400">#ECO</span>
+                    </div>
+                    <p class="text-gray-500 line-clamp-2">Una torre de bio-filtración que limpia el aire del centro mediante algas y jardines verticales.</p>
+                    
+                    <!-- Barra de Votos (Mini) -->
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <div class="flex justify-between text-xs font-bold uppercase mb-1">
+                            <span>Votos</span>
+                            <span id="mini-count-A">...</span>
+                        </div>
+                        <div class="w-full bg-gray-100 h-1.5 rounded-full">
+                            <div id="mini-bar-A" class="bg-lab-black h-full rounded-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- PROYECTO 2 -->
+                <article class="project-card group cursor-pointer lg:mt-16" onclick="openModal('B')">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-6 shadow-lg hover-lift">
+                        <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Opción B">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">Opción B</div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent text-white opacity-0 group-hover:opacity-100 transition duration-300 translate-y-4 group-hover:translate-y-0">
+                            <span class="flex items-center gap-2 font-bold">Ver Detalles <i class="ph ph-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-end mb-2">
+                        <h2 class="text-3xl font-display font-bold uppercase">Luz Viva</h2>
+                        <span class="text-sm font-mono text-gray-400">#TECH</span>
+                    </div>
+                    <p class="text-gray-500 line-clamp-2">Instalación interactiva de fibra óptica que responde al movimiento peatonal, iluminando la seguridad nocturna.</p>
+                    
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <div class="flex justify-between text-xs font-bold uppercase mb-1">
+                            <span>Votos</span>
+                            <span id="mini-count-B">...</span>
+                        </div>
+                        <div class="w-full bg-gray-100 h-1.5 rounded-full">
+                            <div id="mini-bar-B" class="bg-lab-accent h-full rounded-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- PROYECTO 3 -->
+                <article class="project-card group cursor-pointer" onclick="openModal('C')">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-6 shadow-lg hover-lift">
+                        <img src="https://images.unsplash.com/photo-1576622329737-29302b4899ce?q=80&w=1931&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Opción C">
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm">Opción C</div>
+                        <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent text-white opacity-0 group-hover:opacity-100 transition duration-300 translate-y-4 group-hover:translate-y-0">
+                            <span class="flex items-center gap-2 font-bold">Ver Detalles <i class="ph ph-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-end mb-2">
+                        <h2 class="text-3xl font-display font-bold uppercase">Ágora</h2>
+                        <span class="text-sm font-mono text-gray-400">#SOCIAL</span>
+                    </div>
+                    <p class="text-gray-500 line-clamp-2">Anfiteatro abierto construido con materiales reciclados de la zona industrial. Cultura accesible para todos.</p>
+                    
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <div class="flex justify-between text-xs font-bold uppercase mb-1">
+                            <span>Votos</span>
+                            <span id="mini-count-C">...</span>
+                        </div>
+                        <div class="w-full bg-gray-100 h-1.5 rounded-full">
+                            <div id="mini-bar-C" class="bg-gray-500 h-full rounded-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-lab-black text-white py-20 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+            <div>
+                <h3 class="text-3xl font-display font-bold uppercase mb-4">San José Lab</h3>
+                <p class="text-gray-500 max-w-xs">Plataforma de innovación urbana y participación ciudadana.</p>
+            </div>
+            <div class="flex flex-col gap-4 text-sm text-gray-400">
+                <a href="#" class="hover:text-white transition">Términos de Votación</a>
+                <a href="#" class="hover:text-white transition">Privacidad</a>
+                <a href="#" class="hover:text-white transition">Contacto</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-white/10 text-center text-xs text-gray-600 uppercase tracking-widest">
+            © 2026 Powered by Abunda AI Technology
+        </div>
+    </footer>
+
+    <!-- MODAL (DETALLES + VOTACIÓN) -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black/90 z-50 hidden opacity-0 transition-opacity duration-300 flex items-end md:items-center justify-center p-4">
+        <div id="modal-content" class="bg-white w-full max-w-5xl h-[85vh] md:h-auto md:max-h-[90vh] rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-2xl relative transform translate-y-full transition-transform duration-500">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-20 w-10 h-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center hover:bg-black hover:text-white transition"><i class="ph ph-x text-xl"></i></button>
+
+            <!-- Media Side (Video/Fotos) -->
+            <div class="w-full md:w-3/5 bg-black relative flex flex-col">
+                <div class="flex-1 video-pattern flex items-center justify-center group cursor-pointer relative overflow-hidden">
+                    <img id="modal-img" src="" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-700">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur rounded-full flex items-center justify-center z-10 hover:bg-lab-accent hover:text-white transition transform group-hover:scale-110">
+                        <i class="ph ph-play-fill text-3xl ml-1"></i>
+                    </div>
+                    <div class="absolute bottom-4 left-4 flex gap-2">
+                        <span class="px-2 py-1 bg-black/50 text-white text-[10px] uppercase font-bold rounded border border-white/20">Video 4K</span>
+                        <span class="px-2 py-1 bg-black/50 text-white text-[10px] uppercase font-bold rounded border border-white/20">Galería</span>
+                    </div>
+                </div>
+                <div class="h-24 bg-lab-black p-4 flex gap-2 overflow-x-auto">
+                    <!-- Thumbnails simulados -->
+                    <div class="aspect-video bg-gray-800 rounded border border-white/10 opacity-100 ring-2 ring-lab-accent"></div>
+                    <div class="aspect-video bg-gray-800 rounded border border-white/10 opacity-50"></div>
+                    <div class="aspect-video bg-gray-800 rounded border border-white/10 opacity-50"></div>
+                </div>
+            </div>
+
+            <!-- Info Side -->
+            <div class="w-full md:w-2/5 p-8 md:p-10 flex flex-col bg-white overflow-y-auto">
+                <span id="modal-tag" class="text-xs font-bold text-lab-accent uppercase tracking-widest mb-2">Opción A</span>
+                <h2 id="modal-title" class="text-4xl font-display font-bold mb-6 leading-none">PULMÓN URBANO</h2>
+                
+                <div class="space-y-4 text-gray-600 text-sm leading-relaxed mb-8 flex-1">
+                    <p id="modal-desc">Descripción detallada del proyecto...</p>
+                    <ul class="space-y-2 mt-4">
+                        <li class="flex items-center gap-2"><i class="ph ph-check text-lab-accent"></i> <span id="modal-feat-1">Característica 1</span></li>
+                        <li class="flex items-center gap-2"><i class="ph ph-check text-lab-accent"></i> <span id="modal-feat-2">Característica 2</span></li>
+                    </ul>
+                </div>
+
+                <!-- Live Stats in Modal -->
+                <div class="bg-gray-50 p-4 rounded-xl mb-6 border border-gray-100">
+                    <div class="flex justify-between items-end mb-2">
+                        <span class="text-xs font-bold uppercase text-gray-400">Total Votos</span>
+                        <span id="modal-votes" class="text-2xl font-display font-bold text-lab-black">1,240</span>
+                    </div>
+                    <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                        <div id="modal-bar" class="bg-lab-accent h-full rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <button id="modal-vote-btn" class="w-full py-4 bg-lab-black text-white font-bold rounded-xl hover:bg-lab-accent transition transform hover:-translate-y-1 shadow-lg flex justify-center items-center gap-2">
+                    <i class="ph ph-thumbs-up"></i> VOTAR POR ESTE PROYECTO
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIC -->
+    <script>
+        // DATOS DE PROYECTOS
+        const projects = {
+            'A': {
+                title: "Pulmón Urbano",
+                tag: "Opción A - Ecología",
+                img: "https://images.unsplash.com/photo-1518005068251-37900150dfca?q=80&w=1974&auto=format&fit=crop",
+                desc: "Una propuesta radical para descontaminar el centro. Utiliza una estructura de bio-concreto que absorbe CO2 y jardines verticales hidropónicos. Incluye un sistema de recolección de agua lluvia para riego automático.",
+                features: ["Purificación de aire (equiv. 500 árboles)", "Paneles solares transparentes", "Kioscos de materiales reciclados"]
+            },
+            'B': {
+                title: "Luz Viva",
+                tag: "Opción B - Tecnología",
+                img: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop",
+                desc: "Arte y seguridad se unen. Postes inteligentes con sensores de movimiento crean olas de luz que acompañan al peatón. Durante el día, son esculturas cinéticas que se mueven con el viento.",
+                features: ["Iluminación LED de bajo consumo", "Wi-Fi público integrado", "Monitoreo ambiental en tiempo real"]
+            },
+            'C': {
+                title: "Ágora Sonora",
+                tag: "Opción C - Social",
+                img: "https://images.unsplash.com/photo-1576622329737-29302b4899ce?q=80&w=1931&auto=format&fit=crop",
+                desc: "Recuperamos el espacio para la voz humana. Un anfiteatro diseñado acústicamente para que no se necesiten micrófonos. El suelo está hecho de caucho reciclado de llantas.",
+                features: ["Capacidad para 300 personas", "Cero huella de carbono", "Espacios para mercaditos locales"]
+            }
+        };
+
+        // ESTADO DE VOTOS (SIMULADO)
+        const votes = { 'A': 1240, 'B': 2105, 'C': 850 };
+        let currentModalId = null;
+
+        // --- SISTEMA DE MODAL ---
+        function openModal(id) {
+            currentModalId = id;
+            const p = projects[id];
+            
+            // Llenar datos
+            document.getElementById('modal-img').src = p.img;
+            document.getElementById('modal-title').innerText = p.title;
+            document.getElementById('modal-tag').innerText = p.tag;
+            document.getElementById('modal-desc').innerText = p.desc;
+            document.getElementById('modal-feat-1').innerText = p.features[0];
+            document.getElementById('modal-feat-2').innerText = p.features[1];
+            
+            // Actualizar botón según estado
+            updateModalButtonState();
+            updateModalStats();
+
+            // Animación de entrada
+            const overlay = document.getElementById('modal-overlay');
+            const content = document.getElementById('modal-content');
+            
+            overlay.classList.remove('hidden');
+            // Timeout pequeño para permitir que el navegador renderice antes de la transición
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+                content.classList.remove('translate-y-full');
+            }, 10);
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            const content = document.getElementById('modal-content');
+            
+            overlay.classList.add('opacity-0');
+            content.classList.add('translate-y-full');
+            
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                currentModalId = null;
+            }, 300);
+        }
+
+        // --- SISTEMA DE VOTOS ---
+        function updateStats() {
+            const total = votes['A'] + votes['B'] + votes['C'];
+            
+            ['A', 'B', 'C'].forEach(id => {
+                const count = votes[id];
+                const percent = (count / total) * 100;
+                
+                // Mini bars (Home)
+                document.getElementById(`mini-count-${id}`).innerText = count.toLocaleString();
+                document.getElementById(`mini-bar-${id}`).style.width = `${percent}%`;
+            });
+        }
+
+        function updateModalStats() {
+            if(!currentModalId) return;
+            const total = votes['A'] + votes['B'] + votes['C'];
+            const count = votes[currentModalId];
+            const percent = (count / total) * 100;
+            
+            document.getElementById('modal-votes').innerText = count.toLocaleString();
+            document.getElementById('modal-bar').style.width = `${percent}%`;
+        }
+
+        function updateModalButtonState() {
+            const btn = document.getElementById('modal-vote-btn');
+            const hasVoted = localStorage.getItem('sanjoselab_voted');
+
+            if (hasVoted) {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-400');
+                btn.classList.remove('bg-lab-black', 'hover:bg-lab-accent');
+                
+                if (hasVoted === currentModalId) {
+                    btn.innerHTML = '<i class="ph ph-check-circle"></i> YA VOTASTE POR ESTA OPCIÓN';
+                    btn.classList.add('bg-green-600', 'text-white');
+                    btn.classList.remove('bg-gray-400');
+                } else {
+                    btn.innerHTML = 'YA REGISTRASTE TU VOTO EN OTRA OPCIÓN';
+                }
+            } else {
+                btn.disabled = false;
+                btn.onclick = () => castVote(currentModalId);
+                btn.innerHTML = '<i class="ph ph-thumbs-up"></i> VOTAR POR ESTE PROYECTO';
+                btn.classList.add('bg-lab-black');
+                btn.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-400', 'bg-green-600');
+            }
+        }
+
+        function castVote(id) {
+            if (localStorage.getItem('sanjoselab_voted')) return;
+
+            // Simular API
+            votes[id]++;
+            localStorage.setItem('sanjoselab_voted', id);
+            
+            // Feedback visual
+            updateStats();
+            updateModalStats();
+            updateModalButtonState();
+            
+            // Confeti (Opcional, pero satisfactorio)
+            alert("¡Tu voto ha sido registrado! Gracias por ayudar a construir San José.");
+        }
+
+        // TIMER
+        setInterval(() => {
+            const now = new Date();
+            // Cuenta regresiva falsa para demo (siempre 48 horas en el futuro)
+            // En producción usaríamos una fecha fija: new Date("2026-03-01")
+            const hours = 47 - (now.getHours() % 48);
+            const mins = 59 - now.getMinutes();
+            const secs = 59 - now.getSeconds();
+            document.getElementById('countdown').innerText = 
+                `${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+        }, 1000);
+
+        // INIT
+        updateStats();
+
+        // Close modal on outside click
+        document.getElementById('modal-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'modal-overlay') closeModal();
+        });
+
+    </script>
+</body>
+</html>
