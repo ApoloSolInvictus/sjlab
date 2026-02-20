@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>San José Lab | Votación Pública 2026</title>
+    <title>San José Lab | Votación Pública Sky Garden</title>
     
     <!-- Librerías -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <!-- Configuración Tailwind -->
     <script>
@@ -59,29 +63,29 @@
         <div class="text-2xl font-display font-bold tracking-tighter uppercase">
             San José <span class="text-lab-accent">Lab</span>
         </div>
-        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest border border-white/30 px-3 py-1 rounded-full">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            Votación En Vivo
+        <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest border border-white/30 px-3 py-1 rounded-full bg-black/20 backdrop-blur-sm">
+            <span id="db-status-dot" class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
+            <span id="db-status-text">Conectando...</span>
         </div>
     </header>
 
     <!-- HERO SECTION -->
     <section class="min-h-[60vh] flex flex-col justify-center items-center text-center px-4 pt-20 relative overflow-hidden">
-        <h1 class="text-6xl md:text-9xl font-display font-bold tracking-tighter leading-none mb-4 z-10 relative">
-            FUTURO <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-lab-black to-lab-gray bg-cover">URBANO</span>
+        <h1 class="text-5xl md:text-8xl font-display font-bold tracking-tighter leading-none mb-4 z-10 relative">
+            PROYECTO <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-lab-black to-lab-gray bg-cover">SKY GARDEN</span>
         </h1>
-        <p class="text-lg md:text-xl text-lab-gray max-w-xl mx-auto z-10 font-light mb-8">
-            Tres visiones para transformar el espacio público de San José. <br>
-            Tu voz decide cuál se construye.
+        <p class="text-lg md:text-xl text-lab-gray max-w-2xl mx-auto z-10 font-light mb-8">
+            Tres visiones artísticas para transformar la fachada principal del edificio. <br>
+            La ciudad es tu lienzo. Tu voto decide la obra final.
         </p>
         
         <!-- COUNTDOWN -->
         <div class="flex gap-4 font-mono text-sm md:text-base border-t border-b border-black/10 py-4 z-10" id="countdown">
-            <div><span class="font-bold text-2xl" id="days">02</span> Días</div>
+            <div><span class="font-bold text-2xl" id="days">00</span> Días</div>
             <div class="opacity-30">/</div>
-            <div><span class="font-bold text-2xl" id="hours">14</span> Horas</div>
+            <div><span class="font-bold text-2xl" id="hours">00</span> Horas</div>
             <div class="opacity-30">/</div>
-            <div><span class="font-bold text-2xl" id="mins">35</span> Min</div>
+            <div><span class="font-bold text-2xl" id="mins">00</span> Min</div>
         </div>
 
         <!-- Background Decor -->
@@ -91,80 +95,81 @@
     <!-- VOTING SECTION -->
     <section class="max-w-7xl mx-auto px-6 pb-24 relative z-10">
         <div class="grid lg:grid-cols-3 gap-8" id="projects-container">
-            <!-- Project 1 -->
+            
+            <!-- Project A -->
             <div class="project-card bg-white p-2 shadow-xl hover:shadow-2xl transition duration-500 group relative">
-                <div class="h-96 overflow-hidden relative bg-gray-200">
-                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 transform group-hover:scale-105" alt="Plaza Verde">
+                <div class="h-[500px] overflow-hidden relative bg-gray-200">
+                    <img src="images/IMG_7529.jpeg" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-105" alt="Mural Flora">
                     <div class="absolute top-4 left-4 bg-black text-white text-xs font-bold px-3 py-1 font-mono">OPCIÓN A</div>
                 </div>
                 <div class="p-6">
-                    <h2 class="text-3xl font-display font-bold mb-2 uppercase">Bosque Vertical</h2>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Una estructura biofílica que purifica el aire y ofrece sombra en el bulevar central. Integra paneles solares y recolección de agua.</p>
+                    <h2 class="text-3xl font-display font-bold mb-2 uppercase">Mural Flora</h2>
+                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Diseño inspirado en la biodiversidad botánica de Costa Rica, integrando colores cálidos y naturaleza viva en la fachada vertical.</p>
                     
                     <div class="mb-6">
                         <div class="flex justify-between text-xs font-bold uppercase mb-1">
                             <span>Votos</span>
-                            <span id="count-A">1,240</span>
+                            <span id="count-A">0</span>
                         </div>
                         <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-lab-black h-full vote-bar" id="bar-A" style="width: 35%"></div>
+                            <div class="bg-lab-black h-full vote-bar" id="bar-A" style="width: 0%"></div>
                         </div>
                     </div>
 
                     <button onclick="vote('A')" id="btn-A" class="w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition duration-300">
-                        Votar Proyecto A
+                        Votar Opción A
                     </button>
                 </div>
             </div>
 
-            <!-- Project 2 -->
+            <!-- Project B -->
             <div class="project-card bg-white p-2 shadow-xl hover:shadow-2xl transition duration-500 group relative transform lg:-translate-y-12">
-                <div class="h-96 overflow-hidden relative bg-gray-200">
-                    <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 transform group-hover:scale-105" alt="Arte Luz">
+                <div class="h-[500px] overflow-hidden relative bg-gray-200">
+                    <img src="images/IMG_7530.jpeg" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-105" alt="Mural Fauna">
                     <div class="absolute top-4 left-4 bg-black text-white text-xs font-bold px-3 py-1 font-mono">OPCIÓN B</div>
                 </div>
                 <div class="p-6">
-                    <h2 class="text-3xl font-display font-bold mb-2 uppercase">Luz Cinética</h2>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Instalación interactiva de luces LED que responden al movimiento de los peatones. Un espectáculo nocturno que revitaliza la seguridad.</p>
+                    <h2 class="text-3xl font-display font-bold mb-2 uppercase">Mural Fauna</h2>
+                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Composición en tonos pastel que rinde homenaje a las aves locales, creando una sensación de movimiento y libertad hacia el cielo.</p>
                     
                     <div class="mb-6">
                         <div class="flex justify-between text-xs font-bold uppercase mb-1">
                             <span>Votos</span>
-                            <span id="count-B">2,105</span>
+                            <span id="count-B">0</span>
                         </div>
                         <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-lab-accent h-full vote-bar" id="bar-B" style="width: 55%"></div>
+                            <div class="bg-lab-accent h-full vote-bar" id="bar-B" style="width: 0%"></div>
                         </div>
                     </div>
 
                     <button onclick="vote('B')" id="btn-B" class="w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-lab-accent hover:border-lab-accent hover:text-white transition duration-300">
-                        Votar Proyecto B
+                        Votar Opción B
                     </button>
                 </div>
             </div>
 
-            <!-- Project 3 -->
+            <!-- Project C -->
             <div class="project-card bg-white p-2 shadow-xl hover:shadow-2xl transition duration-500 group relative">
-                <div class="h-96 overflow-hidden relative bg-gray-200">
-                    <img src="https://images.unsplash.com/photo-1595878715977-2e8f8df18ea8?q=80&w=1974&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 transform group-hover:scale-105" alt="Pabellón Sonoro">
+                <div class="h-[500px] overflow-hidden relative bg-gray-200">
+                    <img src="images/IMG_7531.jpeg" class="w-full h-full object-cover transition duration-700 transform group-hover:scale-105" alt="Mural Comunidad">
                     <div class="absolute top-4 left-4 bg-black text-white text-xs font-bold px-3 py-1 font-mono">OPCIÓN C</div>
                 </div>
                 <div class="p-6">
-                    <h2 class="text-3xl font-display font-bold mb-2 uppercase">Ágora Sonora</h2>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Un anfiteatro abierto construido con materiales reciclados para conciertos y charlas al aire libre. Acústica natural.</p>
+                    <h2 class="text-3xl font-display font-bold mb-2 uppercase">Comunidad</h2>
+                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Una representación vibrante de la diversidad humana, conectando a los ciudadanos con el espacio vertical mediante arte figurativo.</p>
                     
                     <div class="mb-6">
                         <div class="flex justify-between text-xs font-bold uppercase mb-1">
                             <span>Votos</span>
-                            <span id="count-C">850</span>
+                            <span id="count-C">0</span>
                         </div>
                         <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-gray-400 h-full vote-bar" id="bar-C" style="width: 10%"></div>
+                            <div class="bg-gray-400 h-full vote-bar" id="bar-C" style="width: 0%"></div>
                         </div>
                     </div>
 
                     <button onclick="vote('C')" id="btn-C" class="w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition duration-300">
-                        Votar Proyecto C
+                        Votar Opción C
                     </button>
                 </div>
             </div>
@@ -172,109 +177,181 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-lab-black text-white py-12 px-6">
+    <footer class="bg-lab-black text-white py-12 px-6 relative z-10">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="text-center md:text-left">
                 <h3 class="font-display font-bold text-2xl uppercase">San José Lab</h3>
-                <p class="text-xs text-gray-500 mt-2 font-mono">Arquitectura • Arte • Comunidad</p>
+                <p class="text-xs text-gray-500 mt-2 font-mono">Arte Urbano • Comunidad • Tecnología</p>
             </div>
-            <div class="flex gap-6">
-                <a href="#" class="text-gray-500 hover:text-white transition"><i class="ph ph-instagram-logo text-2xl"></i></a>
-                <a href="#" class="text-gray-500 hover:text-white transition"><i class="ph ph-facebook-logo text-2xl"></i></a>
-                <a href="#" class="text-gray-500 hover:text-white transition"><i class="ph ph-globe text-2xl"></i></a>
+            <div class="text-[10px] text-gray-600 uppercase tracking-widest">
+                Powered by Infiniti IA
             </div>
         </div>
     </footer>
 
-    <!-- LOGIC -->
+    <!-- LÓGICA CORE & FIREBASE -->
     <script>
-        // SIMULACIÓN DE DATOS (En producción conectaríamos a Firebase)
-        const votes = {
-            'A': 1240,
-            'B': 2105,
-            'C': 850
+        // ==========================================
+        // 1. CONFIGURACIÓN FIREBASE (PEGUE SUS LLAVES AQUÍ)
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "TU_API_KEY_AQUI", 
+            authDomain: "TU_PROYECTO.firebaseapp.com",
+            projectId: "TU_PROYECTO",
+            storageBucket: "TU_PROYECTO.appspot.com",
+            messagingSenderId: "NUMERO",
+            appId: "ID_APP"
         };
-        const totalVotes = 1240 + 2105 + 850;
 
-        // Comprobación de IP (Simulada con LocalStorage)
-        const hasVoted = localStorage.getItem('sanjoselab_voted');
+        // Variables Globales
+        let db = null;
+        let localVotes = { A: 0, B: 0, C: 0 };
+        const hasVotedOption = localStorage.getItem('sanjoselab_voted');
 
-        function updateBars() {
-            const total = votes['A'] + votes['B'] + votes['C'];
+        // ==========================================
+        // 2. INICIALIZACIÓN
+        // ==========================================
+        async function initApp() {
+            try {
+                if (firebaseConfig.apiKey !== "TU_API_KEY_AQUI") {
+                    firebase.initializeApp(firebaseConfig);
+                    db = firebase.firestore();
+                    
+                    document.getElementById('db-status-dot').classList.replace('bg-yellow-500', 'bg-green-500');
+                    document.getElementById('db-status-text').innerText = "Votos en Vivo";
+                    
+                    // Escuchar cambios en la base de datos
+                    listenToVotes();
+                } else {
+                    document.getElementById('db-status-dot').classList.replace('bg-yellow-500', 'bg-red-500');
+                    document.getElementById('db-status-text').innerText = "Modo Demo";
+                    
+                    // Datos de prueba si no hay Firebase
+                    localVotes = { A: 124, B: 205, C: 85 };
+                    updateUI();
+                }
+            } catch (e) {
+                console.error("Error iniciando Firebase:", e);
+            }
+
+            // Aplicar estado si ya votó
+            if (hasVotedOption) {
+                lockVotingUI(hasVotedOption);
+            }
+        }
+
+        // ==========================================
+        // 3. LÓGICA DE VOTACIÓN Y BASE DE DATOS
+        // ==========================================
+        function listenToVotes() {
+            // Escuchamos el documento 'sky_garden' dentro de la colección 'votaciones'
+            db.collection('votaciones').doc('sky_garden').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    localVotes.A = data.A || 0;
+                    localVotes.B = data.B || 0;
+                    localVotes.C = data.C || 0;
+                    updateUI();
+                } else {
+                    // Si no existe, lo creamos con ceros
+                    db.collection('votaciones').doc('sky_garden').set({ A: 0, B: 0, C: 0 });
+                }
+            });
+        }
+
+        async function vote(option) {
+            if (localStorage.getItem('sanjoselab_voted')) {
+                alert("Gracias por tu interés, pero ya has registrado tu voto.");
+                return;
+            }
+
+            // Bloqueo inmediato en Interfaz
+            localStorage.setItem('sanjoselab_voted', option);
+            lockVotingUI(option);
+
+            if (db) {
+                try {
+                    // 1. Incrementar el contador principal
+                    const docRef = db.collection('votaciones').doc('sky_garden');
+                    await docRef.update({
+                        [option]: firebase.firestore.FieldValue.increment(1)
+                    });
+
+                    // 2. Seguridad: Guardar la IP para evitar bots
+                    try {
+                        const ipRes = await fetch('https://api.ipify.org?format=json');
+                        const ipData = await ipRes.json();
+                        await db.collection('votos_ips').doc(ipData.ip).set({
+                            voto: option,
+                            proyecto: 'sky_garden',
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    } catch(e) { console.log("No se pudo registrar IP, pero el voto se contó."); }
+
+                } catch (error) {
+                    console.error("Error al registrar el voto en DB:", error);
+                }
+            } else {
+                // Si está en modo Demo, sumar localmente
+                localVotes[option]++;
+                updateUI();
+            }
+
+            alert(`¡Voto confirmado por la Opción ${option}! Gracias por ayudar a construir la ciudad.`);
+        }
+
+        // ==========================================
+        // 4. INTERFAZ Y UTILIDADES
+        // ==========================================
+        function updateUI() {
+            const total = localVotes.A + localVotes.B + localVotes.C;
             
-            // Actualizar textos y barras
             ['A', 'B', 'C'].forEach(id => {
-                const count = votes[id];
-                const percent = (count / total) * 100;
+                const count = localVotes[id];
+                const percent = total === 0 ? 0 : (count / total) * 100;
                 
                 document.getElementById(`count-${id}`).innerText = count.toLocaleString();
                 document.getElementById(`bar-${id}`).style.width = `${percent}%`;
             });
         }
 
-        function vote(option) {
-            if (localStorage.getItem('sanjoselab_voted')) {
-                alert("Gracias por tu interés, pero ya has registrado tu voto.");
-                return;
-            }
-
-            // Simular envío al servidor
-            votes[option]++;
-            localStorage.setItem('sanjoselab_voted', option);
-            
-            // Efecto visual
-            updateBars();
-            
-            // Deshabilitar botones visualmente
+        function lockVotingUI(votedOption) {
             document.querySelectorAll('button').forEach(btn => {
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-                btn.innerText = "Voto Registrado";
-            });
-
-            // Feedback
-            const btn = document.getElementById(`btn-${option}`);
-            btn.classList.remove('opacity-50');
-            btn.classList.add('bg-lab-accent', 'text-white', 'border-lab-accent');
-            btn.innerText = "¡Voto Confirmado!";
-            
-            alert(`Has votado por la Opción ${option}. ¡Gracias por construir ciudad!`);
-        }
-
-        // Si ya votó al cargar la página
-        if (hasVoted) {
-            document.querySelectorAll('button').forEach(btn => {
-                if (btn.id === `btn-${hasVoted}`) {
-                    btn.classList.add('bg-lab-black', 'text-white');
-                    btn.innerText = "Tu Elección";
+                const btnOption = btn.id.split('-')[1]; // Extrae 'A', 'B' o 'C'
+                
+                btn.disabled = true;
+                if (btnOption === votedOption) {
+                    btn.classList.add('bg-lab-accent', 'text-white', 'border-lab-accent');
+                    btn.classList.remove('hover:bg-black', 'hover:text-white', 'hover:bg-lab-accent');
+                    btn.innerHTML = '<i class="ph ph-check-circle text-xl mr-2"></i> Tu Elección';
                 } else {
-                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                    btn.classList.add('opacity-40', 'cursor-not-allowed', 'bg-gray-200', 'border-gray-200');
+                    btn.classList.remove('hover:bg-black', 'hover:text-white', 'hover:bg-lab-accent');
                     btn.innerText = "Votación Cerrada";
-                    btn.onclick = () => alert("Ya has votado anteriormente.");
                 }
             });
         }
 
-        // TIMER LOGIC
-        const deadline = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000).getTime(); // 2 días ficticios
+        // TIMER LOGIC (Cuenta regresiva ficticia de 7 días)
+        const deadline = new Date();
+        deadline.setDate(deadline.getDate() + 7); 
         
         setInterval(() => {
             const now = new Date().getTime();
-            const t = deadline - now;
-            
+            const t = deadline.getTime() - now;
             if (t > 0) {
                 const days = Math.floor(t / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const mins = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
                 
-                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-                document.getElementById('mins').innerText = mins < 10 ? '0' + mins : mins;
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('mins').innerText = mins.toString().padStart(2, '0');
             }
         }, 1000);
 
-        // Iniciar
-        updateBars();
+        // Arrancar
+        initApp();
     </script>
-
 </body>
 </html>
