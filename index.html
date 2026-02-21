@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/my-favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="ProfCR" />
     <link rel="manifest" href="/my-favicon/site.webmanifest" />
-    
+
     <title>San José Lab | Votación Pública Sky Garden</title>
     
     <!-- SEO y Meta Tags para Redes Sociales -->
@@ -29,10 +29,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <!-- Configuración Tailwind -->
     <script>
@@ -59,7 +55,6 @@
     <style>
         body { background-color: #f4f4f0; color: #1a1a1a; }
         .project-card:hover { transform: translateY(-10px); }
-        .vote-bar { transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
         
         /* Efecto de ruido sutil */
         .noise-bg {
@@ -84,8 +79,8 @@
             San José <span class="text-lab-accent">Lab</span>
         </div>
         <div class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest border border-white/30 px-3 py-1 rounded-full bg-black/20 backdrop-blur-sm">
-            <span id="db-status-dot" class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></span>
-            <span id="db-status-text">Conectando...</span>
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span>Votación Oficial</span>
         </div>
     </header>
 
@@ -129,23 +124,13 @@
                         </button>
                     </div>
                 </div>
-                <div class="p-6">
+                <div class="p-6 flex flex-col h-[220px]">
                     <h2 class="text-3xl font-display font-bold mb-2 uppercase">Mural Flora</h2>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Diseño inspirado en la biodiversidad botánica de Costa Rica, integrando colores cálidos y naturaleza viva en la fachada vertical.</p>
+                    <p class="text-sm text-gray-500 mb-6 leading-relaxed flex-grow">Diseño inspirado en la biodiversidad botánica de Costa Rica, integrando colores cálidos y naturaleza viva en la fachada vertical.</p>
                     
-                    <div class="mb-6">
-                        <div class="flex justify-between text-xs font-bold uppercase mb-1">
-                            <span>Votos</span>
-                            <span id="count-A">0</span>
-                        </div>
-                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-lab-black h-full vote-bar" id="bar-A" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <button onclick="vote('A')" id="btn-A" class="w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition duration-300">
+                    <a href="https://citizeninmobiliaria.com/votacion-mural-sky-garden-sabana-2026/" target="_blank" class="block text-center w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition duration-300">
                         Votar Opción A
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -162,23 +147,13 @@
                         </button>
                     </div>
                 </div>
-                <div class="p-6">
+                <div class="p-6 flex flex-col h-[220px]">
                     <h2 class="text-3xl font-display font-bold mb-2 uppercase">Mural Fauna</h2>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Composición en tonos pastel que rinde homenaje a las aves locales, creando una sensación de movimiento y libertad hacia el cielo.</p>
+                    <p class="text-sm text-gray-500 mb-6 leading-relaxed flex-grow">Composición en tonos pastel que rinde homenaje a las aves locales, creando una sensación de movimiento y libertad hacia el cielo.</p>
                     
-                    <div class="mb-6">
-                        <div class="flex justify-between text-xs font-bold uppercase mb-1">
-                            <span>Votos</span>
-                            <span id="count-B">0</span>
-                        </div>
-                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-lab-accent h-full vote-bar" id="bar-B" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <button onclick="vote('B')" id="btn-B" class="w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-lab-accent hover:border-lab-accent hover:text-white transition duration-300">
+                    <a href="https://citizeninmobiliaria.com/votacion-mural-sky-garden-sabana-2026/" target="_blank" class="block text-center w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-lab-accent hover:border-lab-accent hover:text-white transition duration-300">
                         Votar Opción B
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -195,25 +170,25 @@
                         </button>
                     </div>
                 </div>
-                <div class="p-6">
+                <div class="p-6 flex flex-col h-[220px]">
                     <h2 class="text-3xl font-display font-bold mb-2 uppercase">Comunidad</h2>
-                    <p class="text-sm text-gray-500 mb-6 leading-relaxed">Una representación vibrante de la diversidad humana, conectando a los ciudadanos con el espacio vertical mediante arte figurativo.</p>
+                    <p class="text-sm text-gray-500 mb-6 leading-relaxed flex-grow">Una representación vibrante de la diversidad humana, conectando a los ciudadanos con el espacio vertical mediante arte figurativo.</p>
                     
-                    <div class="mb-6">
-                        <div class="flex justify-between text-xs font-bold uppercase mb-1">
-                            <span>Votos</span>
-                            <span id="count-C">0</span>
-                        </div>
-                        <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-gray-400 h-full vote-bar" id="bar-C" style="width: 0%"></div>
-                        </div>
-                    </div>
-
-                    <button onclick="vote('C')" id="btn-C" class="w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition duration-300">
+                    <a href="https://citizeninmobiliaria.com/votacion-mural-sky-garden-sabana-2026/" target="_blank" class="block text-center w-full py-4 border-2 border-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition duration-300">
                         Votar Opción C
-                    </button>
+                    </a>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- SPONSORS SECTION -->
+    <section class="max-w-4xl mx-auto px-6 pb-16 relative z-10 text-center">
+        <h3 class="text-xl md:text-2xl font-display font-bold mb-8 uppercase tracking-widest text-lab-gray">
+            Desarrollado Por:
+        </h3>
+        <div class="bg-white p-4 md:p-8 rounded-2xl shadow-xl border border-black/5 hover:shadow-2xl transition duration-500">
+            <img src="images/Patrocinio.jpeg" alt="Patrocinadores y Desarrolladores" class="w-full h-auto rounded-lg object-contain">
         </div>
     </section>
 
@@ -247,27 +222,10 @@
         </div>
     </div>
 
-    <!-- LÓGICA CORE & FIREBASE -->
+    <!-- LÓGICA DE VIDEO Y UI -->
     <script>
         // ==========================================
-        // 1. CONFIGURACIÓN FIREBASE 
-        // ==========================================
-        const firebaseConfig = {
-            apiKey: "AIzaSyBwMCMqpUPHS2ieMskjthIfZehut7xcwkA", 
-            authDomain: "sjlab-97c6b.firebaseapp.com",
-            projectId: "sjlab-97c6b",
-            storageBucket: "sjlab-97c6b.firebasestorage.app",
-            messagingSenderId: "36716915479",
-            appId: "1:36716915479:web:6376011090be03eefa6552"
-        };
-
-        // Variables Globales
-        let db = null;
-        let localVotes = { A: 0, B: 0, C: 0 };
-        const hasVotedOption = localStorage.getItem('sanjoselab_voted');
-
-        // ==========================================
-        // 2. LÓGICA DE VIDEO (NUEVO)
+        // LÓGICA DE VIDEO
         // ==========================================
         function playVideo(option) {
             const modal = document.getElementById('video-modal');
@@ -308,133 +266,8 @@
         }
 
         // ==========================================
-        // 3. INICIALIZACIÓN
+        // TIMER LOGIC (Cuenta regresiva)
         // ==========================================
-        async function initApp() {
-            try {
-                if (firebaseConfig.apiKey !== "TU_API_KEY_AQUI") {
-                    firebase.initializeApp(firebaseConfig);
-                    db = firebase.firestore();
-                    
-                    document.getElementById('db-status-dot').classList.replace('bg-yellow-500', 'bg-green-500');
-                    document.getElementById('db-status-text').innerText = "Votos en Vivo";
-                    
-                    // Escuchar cambios en la base de datos
-                    listenToVotes();
-                } else {
-                    document.getElementById('db-status-dot').classList.replace('bg-yellow-500', 'bg-red-500');
-                    document.getElementById('db-status-text').innerText = "Modo Demo";
-                    
-                    // Datos de prueba si no hay Firebase
-                    localVotes = { A: 124, B: 205, C: 85 };
-                    updateUI();
-                }
-            } catch (e) {
-                console.error("Error iniciando Firebase:", e);
-            }
-
-            // Aplicar estado si ya votó
-            if (hasVotedOption) {
-                lockVotingUI(hasVotedOption);
-            }
-        }
-
-        // ==========================================
-        // 4. LÓGICA DE VOTACIÓN Y BASE DE DATOS
-        // ==========================================
-        function listenToVotes() {
-            // Escuchamos el documento 'sky_garden' dentro de la colección 'votaciones'
-            db.collection('votaciones').doc('sky_garden').onSnapshot((doc) => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    localVotes.A = data.A || 0;
-                    localVotes.B = data.B || 0;
-                    localVotes.C = data.C || 0;
-                    updateUI();
-                } else {
-                    // Si no existe, lo creamos con ceros
-                    db.collection('votaciones').doc('sky_garden').set({ A: 0, B: 0, C: 0 });
-                }
-            });
-        }
-
-        async function vote(option) {
-            if (localStorage.getItem('sanjoselab_voted')) {
-                alert("Gracias por tu interés, pero ya has registrado tu voto.");
-                return;
-            }
-
-            // Bloqueo inmediato en Interfaz
-            localStorage.setItem('sanjoselab_voted', option);
-            lockVotingUI(option);
-
-            if (db) {
-                try {
-                    // 1. Incrementar el contador principal
-                    const docRef = db.collection('votaciones').doc('sky_garden');
-                    await docRef.update({
-                        [option]: firebase.firestore.FieldValue.increment(1)
-                    });
-
-                    // 2. Seguridad: Guardar la IP para evitar bots
-                    try {
-                        const ipRes = await fetch('https://api.ipify.org?format=json');
-                        const ipData = await ipRes.json();
-                        await db.collection('votos_ips').doc(ipData.ip).set({
-                            voto: option,
-                            proyecto: 'sky_garden',
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    } catch(e) { console.log("No se pudo registrar IP, pero el voto se contó."); }
-
-                } catch (error) {
-                    console.error("Error al registrar el voto en DB:", error);
-                }
-            } else {
-                // Si está en modo Demo, sumar localmente
-                localVotes[option]++;
-                updateUI();
-            }
-
-            alert(`¡Voto confirmado por la Opción ${option}! Gracias por ayudar a construir la ciudad.`);
-        }
-
-        // ==========================================
-        // 5. INTERFAZ Y UTILIDADES
-        // ==========================================
-        function updateUI() {
-            const total = localVotes.A + localVotes.B + localVotes.C;
-            
-            ['A', 'B', 'C'].forEach(id => {
-                const count = localVotes[id];
-                const percent = total === 0 ? 0 : (count / total) * 100;
-                
-                document.getElementById(`count-${id}`).innerText = count.toLocaleString();
-                document.getElementById(`bar-${id}`).style.width = `${percent}%`;
-            });
-        }
-
-        function lockVotingUI(votedOption) {
-            document.querySelectorAll('button').forEach(btn => {
-                // Prevenir que modifique el botón de cerrar video
-                if(!btn.id || !btn.id.startsWith('btn-')) return;
-
-                const btnOption = btn.id.split('-')[1]; // Extrae 'A', 'B' o 'C'
-                
-                btn.disabled = true;
-                if (btnOption === votedOption) {
-                    btn.classList.add('bg-lab-accent', 'text-white', 'border-lab-accent');
-                    btn.classList.remove('hover:bg-black', 'hover:text-white', 'hover:bg-lab-accent');
-                    btn.innerHTML = '<i class="ph ph-check-circle text-xl mr-2"></i> Tu Elección';
-                } else {
-                    btn.classList.add('opacity-40', 'cursor-not-allowed', 'bg-gray-200', 'border-gray-200');
-                    btn.classList.remove('hover:bg-black', 'hover:text-white', 'hover:bg-lab-accent');
-                    btn.innerText = "Votación Cerrada";
-                }
-            });
-        }
-
-        // TIMER LOGIC (Cuenta regresiva ficticia de 7 días)
         const deadline = new Date();
         deadline.setDate(deadline.getDate() + 7); 
         
@@ -451,10 +284,6 @@
                 document.getElementById('mins').innerText = mins.toString().padStart(2, '0');
             }
         }, 1000);
-
-        // Arrancar
-        initApp();
     </script>
 </body>
 </html>
-
